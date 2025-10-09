@@ -1,20 +1,20 @@
 import express from 'express';
+import multer from 'multer';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import pool from '../db.js';
 import { verificarToken } from '../middleware/auth.js';
-import multer from 'multer';
-import path from 'path';
+import cloudinary from '../config/cloudinary.js';
 
 const router = express.Router();
 
 // === CONFIGURACIÓN MULTER ===
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // carpeta donde guardar las imágenes
+// Configurar Multer con Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'aportes_familiares', // Carpeta en Cloudinary
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
 });
 
 const upload = multer({ storage });
@@ -35,22 +35,18 @@ router.get('/', verificarToken, async (req, res) => {
 
 // === CREAR APORTES (CON IMAGEN) ===
 router.post('/', verificarToken, upload.single('imagen'), async (req, res) => {
-  try {
-    const { monto, numero_aporte, fecha, banco } = req.body;
-    const imagen_url = req.file
-      ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-      : null;
+  const { monto, numero_aporte, fecha, banco } = req.body;
+  const imagenUrl = req.file ? req.file.path : null; // URL directa de Cloudinary
 
+  try {
     const result = await pool.query(
       `INSERT INTO aportes (usuario_id, monto, numero_aporte, fecha, banco, imagen_url)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING *`,
-      [req.usuarioId, monto, numero_aporte, fecha, banco, imagen_url]
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [req.usuarioId, monto, numero_aporte, fecha, banco, imagenUrl]
     );
-
-    res.status(201).json({
-      mensaje: 'Aporte creado correctamente',
-      aporte: result.rows[0]
+    res.json({
+      aporte: result.rows[0],
+      mensaje: 'Aporte guardado correctamente en Cloudinary',
     });
   } catch (error) {
     console.error(error);
