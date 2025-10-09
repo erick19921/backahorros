@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 
-import cors from "cors";
+
 import usuariosRoutes from "./routes/usuarios.js";
 import aportesRoutes from "./routes/aportes.js";
 
@@ -22,5 +23,5 @@ app.use('/api/aportes', aportesRoutes);
 // ✅ Puerto del servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://192.168.100.10:${PORT}`);
+  console.log(`Servidor corriendo en: ${PORT}`);
 });
