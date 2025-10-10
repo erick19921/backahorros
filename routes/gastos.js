@@ -53,7 +53,7 @@ router.post('/', verificarToken, upload.single('imagen'), async (req, res) => {
 // 🔹 LISTAR GASTOS DEL USUARIO AUTENTICADO
 // ==============================
 
-router.get('/total', verificarToken, async (req, res) => {
+router.get('/', verificarToken, async (req, res) => {
   try {
     const result = await pool.query(
       'SELECT COALESCE(SUM(monto), 0) AS total FROM gastos WHERE usuario_id = $1',
