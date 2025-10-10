@@ -119,4 +119,15 @@ router.get('/total', verificarToken, async (req, res) => {
   }
 });
 
+// ✅ Total de todos los aportes (sin importar usuario)
+router.get('/total-general', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT COALESCE(SUM(monto), 0) AS total FROM aportes');
+    res.json({ total: result.rows[0].total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener total general' });
+  }
+});
+
 export default router;
