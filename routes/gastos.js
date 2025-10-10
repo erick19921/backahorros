@@ -108,27 +108,33 @@ router.get('/saldo-total', async (req, res) => {
     }
 });
 
-// 🔹 LISTAR TODOS LOS GASTOS (sin filtrar por usuario)
+
+// ✅ Todos los gastos con nombre de usuario
 router.get('/todos', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM gastos ORDER BY fecha DESC');
+    const result = await pool.query(`
+      SELECT g.*, u.nombre AS usuario_nombre
+      FROM gastos g
+      INNER JOIN usuarios u ON g.usuario_id = u.id
+      ORDER BY g.fecha DESC
+    `);
     res.json(result.rows);
   } catch (error) {
-    console.error('❌ Error al obtener todos los gastos:', error);
-    res.status(500).json({ error: 'Error al obtener todos los gastos' });
+    console.error('❌ Error al obtener gastos globales:', error);
+    res.status(500).json({ error: 'Error al obtener los gastos globales' });
   }
 });
 
-// 🔹 TOTAL GLOBAL DE GASTOS
-router.get('/total-general', async (req, res) => {
+// ✅ Total global de gastos
+router.get('/total-global', async (req, res) => {
   try {
     const result = await pool.query(
       'SELECT COALESCE(SUM(monto), 0) AS total FROM gastos'
     );
     res.json({ total: result.rows[0].total });
   } catch (error) {
-    console.error('❌ Error al obtener total general:', error);
-    res.status(500).json({ error: 'Error al obtener total general' });
+    console.error('❌ Error al obtener total global:', error);
+    res.status(500).json({ error: 'Error al obtener total global' });
   }
 });
 
