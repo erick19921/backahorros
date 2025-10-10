@@ -52,8 +52,23 @@ router.post('/', verificarToken, upload.single('imagen'), async (req, res) => {
 // ==============================
 // 🔹 LISTAR GASTOS DEL USUARIO AUTENTICADO
 // ==============================
-
 router.get('/', verificarToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM gastos WHERE usuario_id = $1 ORDER BY fecha DESC',
+      [req.usuarioId]
+    );
+    res.json(result.rows); // ✅ Devuelve lista, no un objeto
+  } catch (error) {
+    console.error('❌ Error al obtener gastos:', error);
+    res.status(500).json({ error: 'Error al obtener los gastos del usuario' });
+  }
+});
+
+// ==============================
+// 🔹 OBTENER TOTAL DE GASTOS POR USUARIO
+// ==============================
+router.get('/total', verificarToken, async (req, res) => {
   try {
     const result = await pool.query(
       'SELECT COALESCE(SUM(monto), 0) AS total FROM gastos WHERE usuario_id = $1',
@@ -61,11 +76,10 @@ router.get('/', verificarToken, async (req, res) => {
     );
     res.json({ total: result.rows[0].total });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al obtener el total de gastos del usuario' });
+    console.error('❌ Error al obtener total de gastos:', error);
+    res.status(500).json({ error: 'Error al obtener el total de gastos' });
   }
 });
-
 
 // ==============================
 // 🔹 CALCULAR SALDO GLOBAL (Aportes - Gastos)
