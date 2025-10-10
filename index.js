@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import gastosRoutes from './routes/gastos.js';
 dotenv.config();
 
 
