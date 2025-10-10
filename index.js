@@ -6,6 +6,7 @@ dotenv.config();
 
 import usuariosRoutes from "./routes/usuarios.js";
 import aportesRoutes from "./routes/aportes.js";
+import gastosRoutes from './routes/gastos.js';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/uploads', express.static('uploads'));
 // ✅ Rutas
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/aportes', aportesRoutes);
+app.use('/api/gastos', gastosRoutes);
 
 // ✅ Puerto del servidor
 const PORT = process.env.PORT || 4000;
