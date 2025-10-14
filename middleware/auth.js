@@ -1,5 +1,4 @@
 // middleware/auth.js
-import { verificarToken } from '../middleware/auth.js';
 import jwt from "jsonwebtoken";
 
 export function verificarToken(req, res, next) {
