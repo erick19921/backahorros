@@ -8,9 +8,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",              // 🧩 Simula el entorno Vercel localmente
-    "start-local": "node server.local.js", // 🧩 Para pruebas locales normales
-    "start": "node api/index.js",     // 🧩 Script de entrada compatible con Vercel
+    "dev": "vercel dev",              
+    "start-local": "node server.local.js", 
+    "start": "node api/index.js",     
     "test": "echo \"No hay tests definidos\" && exit 0"
   },
   "dependencies": {
