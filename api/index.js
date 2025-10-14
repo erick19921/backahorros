@@ -3,9 +3,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import usuariosRoutes from "./routes/usuarios.js";
-import aportesRoutes from "./routes/aportes.js";
-import gastosRoutes from "./routes/gastos.js";
+import usuariosRoutes from "../routes/usuarios.js";
+import aportesRoutes from "../routes/aportes.js";
+import gastosRoutes from "../routes/gastos.js";
+
 
 dotenv.config();
 

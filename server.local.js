@@ -1,5 +1,5 @@
 // server.local.js
-import app from "./index.js";
+import app from "./api/index.js";
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

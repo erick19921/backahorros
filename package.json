@@ -6,11 +6,11 @@
   "engines": {
     "node": ">=18"
   },
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "dev": "vercel dev",              
-    "start-local": "node server.local.js", 
-    "start": "node api/index.js",     
+    "dev": "nodemon server.local.js",
+    "start-local": "node server.local.js",
+    "start": "node api/index.js",
     "test": "echo \"No hay tests definidos\" && exit 0"
   },
   "dependencies": {
@@ -25,7 +25,6 @@
     "pg": "^8.16.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "vercel": "^39.1.0"
+    "nodemon": "^3.1.10"
   }
 }
