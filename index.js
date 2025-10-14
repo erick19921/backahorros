@@ -5,6 +5,7 @@ import cors from "cors";
 import usuariosRoutes from "./routes/usuarios.js";
 import aportesRoutes from "./routes/aportes.js";
 import gastosRoutes from "./routes/gastos.js";
+import pool from "./db.js";
 
 dotenv.config();
 
