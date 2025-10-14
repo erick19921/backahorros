@@ -2,7 +2,7 @@
 import express from "express";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from '../config/cloudinary.js';
 import pool from "../db.js";
 import { verificarToken } from "../middleware/auth.js";
 

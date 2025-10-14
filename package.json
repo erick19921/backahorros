@@ -1,17 +1,15 @@
 {
   "name": "backahorros",
   "version": "1.0.0",
-  "description": "Backend del proyecto Ecuacréditos FM (aportes y gastos)",
   "type": "module",
-  "engines": {
-    "node": ">=18"
-  },
+  "description": "Backend del proyecto Ecuacréditos FM (aportes y gastos)",
   "main": "api/index.js",
   "scripts": {
-    "dev": "nodemon server.local.js",
-    "start-local": "node server.local.js",
-    "start": "node api/index.js",
-    "test": "echo \"No hay tests definidos\" && exit 0"
+  "dev": "nodemon server.local.js",
+  "start": "node api/index.js"
+},
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
