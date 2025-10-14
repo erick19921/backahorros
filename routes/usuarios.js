@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: '1h' }
     );
 
-
+    delete user.contrasena;
     // ✅ Envía también el nombre y el usuario
     res.json({
       token,
