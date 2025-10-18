@@ -5,13 +5,14 @@
   "description": "Backend del proyecto Ecuacréditos FM (aportes y gastos)",
   "main": "api/index.js",
   "scripts": {
-  "dev": "nodemon server.local.js",
-  "start": "node api/index.js"
-},
+    "dev": "nodemon server.local.js",
+    "start": "node api/index.js"
+  },
   "engines": {
-    "node": "20.x"
+    "node": ">=20"
   },
   "dependencies": {
+    "@vercel/node": "^4.0.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
