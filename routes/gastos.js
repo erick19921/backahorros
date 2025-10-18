@@ -96,4 +96,40 @@ router.get("/saldo-total", async (req, res) => {
   }
 });
 
+// =============================
+// 🔹 LISTAR TODOS LOS GASTOS (GLOBAL)
+// =============================
+router.get("/todos", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT g.id, g.descripcion, g.monto, g.fecha, g.imagen_url,
+             u.nombre AS usuario_nombre
+      FROM gastos g
+      JOIN usuarios u ON g.usuario_id = u.id
+      ORDER BY g.fecha DESC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("❌ Error al obtener gastos globales:", error);
+    res.status(500).json({ error: "Error al obtener gastos globales" });
+  }
+});
+
+// =============================
+// 🔹 TOTAL GLOBAL DE GASTOS
+// =============================
+router.get("/total-global", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT COALESCE(SUM(monto), 0) AS total
+      FROM gastos;
+    `);
+    res.json({ total: parseFloat(result.rows[0].total) });
+  } catch (error) {
+    console.error("❌ Error al obtener total global de gastos:", error);
+    res.status(500).json({ error: "Error al obtener total global de gastos" });
+  }
+});
+
+
 export default router;
